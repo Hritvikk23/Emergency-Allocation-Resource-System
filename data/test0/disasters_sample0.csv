@@ -1,0 +1,5 @@
+﻿id,type,location,severity,population,food,water,medical,shelter,deadline
+E1,Flood,R1,4,1200,600,600,150,200,24
+E2,Fire,R2,5,600,300,1000,100,100,12
+E3,Outbreak,R1,2,800,350,200,400,100,48
+E4,Earthquake,R2,4,1000,500,500,200,250,12

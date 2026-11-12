@@ -1,0 +1,5 @@
+﻿id,name,food,water,medical,shelter
+D1,Central,500,800,200,100
+D2,Northeast,700,900,50,300
+D3,South,300,100,400,200
+D4,West,100,500,100,50
