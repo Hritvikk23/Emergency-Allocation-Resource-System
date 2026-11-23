@@ -1,0 +1,5 @@
+from,to,distance,travel_time,capacity
+D1,E1,5,10,400
+D2,E1,20,30,400
+D1,E2,8,15,400
+D2,E2,60,240,400

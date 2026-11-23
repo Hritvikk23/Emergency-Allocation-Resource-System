@@ -1,0 +1,4 @@
+id,name,food,water,medical,shelter
+D1,Central Warehouse,1000,1500,400,300
+D2,North Depot,800,1000,300,200
+D3,Port Storage,900,1200,350,250

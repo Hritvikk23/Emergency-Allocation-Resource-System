@@ -1,0 +1,4 @@
+id,type,location,severity,population,food,water,medical,shelter,deadline
+E1,Flood,Riverside,6,800,300,400,100,80,24
+E2,Earthquake,Hillview,8,1500,500,700,200,150,12
+E3,Wildfire,Pine Ridge,5,400,150,200,50,40,48
