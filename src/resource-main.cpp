@@ -189,15 +189,14 @@ class DataBuilder {
 };
 
 // ---------- greedy allocation ----------
-const int NUM_RES = 4;
-const char* RESOURCES_N[NUM_RES] = {"food", "water", "medical", "shelter"};
-const int SHIP_ORDER[NUM_RES] = {2, 1, 0, 3};
+const char* RESOURCES_N[4] = {"food", "water", "medical", "shelter"};
+const int SHIP_ORDER[4] = {2, 1, 0, 3};
 
 class Allocation {
     public:
         string depotId;
         string disasterId;
-        int amount[NUM_RES];
+        int amount[4];
 };
 
 class GreedyAllocator {
@@ -212,10 +211,10 @@ class GreedyAllocator {
             return dis.severity * (double)dis.population / hours;
         }
 
-        int computeShipment(int d, int e, int cap, int out[NUM_RES]) const {
+        int computeShipment(int d, int e, int cap, int out[4]) const {
             int remaining = cap, total = 0;
-            for (int i = 0; i < NUM_RES; i++) out[i] = 0;
-            for (int i = 0; i < NUM_RES; i++) {
+            for (int i = 0; i < 4; i++) out[i] = 0;
+            for (int i = 0; i < 4; i++) {
                 int k = SHIP_ORDER[i];
                 int take = min(min(stock[d][k], demand[e][k]), remaining);
                 out[k] = take;
@@ -234,7 +233,7 @@ class GreedyAllocator {
             capacityLeft.clear(); routeDepot.clear(); routeDisaster.clear(); result.clear();
             unordered_map<string, int> depotIndex, disasterIndex;
             
-            stock.assign(depots.size(), vector<int>(NUM_RES, 0));
+            stock.assign(depots.size(), vector<int>(4, 0));
             for (size_t i = 0; i < depots.size(); i++) {
                 stock[i][0] = depots[i].food;
                 stock[i][1] = depots[i].water;
@@ -242,7 +241,7 @@ class GreedyAllocator {
                 stock[i][3] = depots[i].shelter;
                 depotIndex[depots[i].id] = (int)i;
             }
-            demand.assign(disasters.size(), vector<int>(NUM_RES, 0));
+            demand.assign(disasters.size(), vector<int>(4, 0));
             for (size_t i = 0; i < disasters.size(); i++) {
                 demand[i][0] = disasters[i].food;
                 demand[i][1] = disasters[i].water;
@@ -259,7 +258,7 @@ class GreedyAllocator {
             while (true) {
                 int best = -1;
                 double bestScore = -1;
-                int out[NUM_RES];
+                int out[4];
 
                 for (size_t r = 0; r < routes.size(); r++) {
                     int d = routeDepot[r], e = routeDisaster[r];
@@ -280,7 +279,7 @@ class GreedyAllocator {
                 Allocation a;
                 a.depotId = depots[d].id;
                 a.disasterId = disasters[e].id;
-                for (int k = 0; k < NUM_RES; k++) {
+                for (int k = 0; k < 4; k++) {
                     a.amount[k] = out[k];
                     stock[d][k] -= out[k];
                     demand[e][k] -= out[k];
@@ -298,7 +297,7 @@ class GreedyAllocator {
             cout << "Shipments (" << result.size() << "):" << endl;
             for (size_t i = 0; i < result.size(); i++) {
                 cout << "  " << result[i].depotId << " -> " << result[i].disasterId << ":";
-                for (int k = 0; k < NUM_RES; k++) cout << " " << RESOURCES_N[k] << " - " << result[i].amount[k] << ";";
+                for (int k = 0; k < 4; k++) cout << " " << RESOURCES_N[k] << " - " << result[i].amount[k] << ";";
                 cout << endl;
             }
 
@@ -306,11 +305,11 @@ class GreedyAllocator {
             long long unmetTotal = 0;
             for (size_t e = 0; e < disasters.size(); e++) {
                 long long unmet_check = 0;
-                for (int k = 0; k < NUM_RES; k++) unmet_check += demand[e][k];
+                for (int k = 0; k < 4; k++) unmet_check += demand[e][k];
                 if (unmet_check != 0) {
                     long long unmet = 0;
                     cout << "  " << disasters[e].id << ":";
-                    for (int k = 0; k < NUM_RES; k++) {
+                    for (int k = 0; k < 4; k++) {
                         cout << " " << RESOURCES_N[k] << " " << demand[e][k];
                         unmet += demand[e][k];
                     }
